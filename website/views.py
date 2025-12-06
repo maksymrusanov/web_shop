@@ -2,18 +2,16 @@ import os
 
 from django.shortcuts import render
 
+from app.settings import MEDIA_ROOT, MEDIA_URL
+
 
 def print_trainers(request):
-    trainers = []
-    for i in os.listdir("website/static/trainers"):
-        trainers.append(f"trainers/{i}")
-    print(f"website/static/trainers/{trainers}")
-    return render(request, "trainers.html", context={"trainers": trainers})
+
+    return render(request, "trainers.html", context={})
 
 
 def show_hoodies(request):
     hoodies = []
-    for i in os.listdir("website/static/hoodies"):
-        hoodies.append(f"hoodies/{i}")
-    print(f"website/static/hoodies{hoodies}")
+    for i in os.listdir(f"{MEDIA_ROOT}/hoodies"):
+        hoodies.append(f"{MEDIA_URL}hoodies/{i}")
     return render(request, "hoodies.html", context={"hoodies": hoodies})

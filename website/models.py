@@ -4,21 +4,19 @@ from django.db import models
 from django.utils import timezone
 
 
-class Question(models.Model):
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField("date published")
+def clothes_upload_path(instance, filename):
+    return f"{instance.type_of_clothes}/{filename}"
+
+
+class Clothes(models.Model):
+    type_of_clothes = models.CharField(max_length=50)
+    size = models.CharField(max_length=50)
+    price = models.IntegerField()
+    name = models.CharField(max_length=50)
+    image = models.ImageField(
+        upload_to=clothes_upload_path,
+        default="default.png",
+    )
 
     def __str__(self):
-        return self.question_text
-
-
-class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.choice_text
-
-    def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+        return self.name
