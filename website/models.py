@@ -10,7 +10,4 @@ class Clothes(models.Model):
     size = models.CharField(max_length=50)
     price = models.IntegerField()
     name = models.CharField(max_length=50)
-    image = models.ImageField(
-        upload_to=clothes_upload_path,
-        default="default.png",
-    )
+    image = models.ImageField(default="default.png", upload_to=clothes_upload_path)

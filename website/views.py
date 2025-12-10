@@ -1,19 +1,32 @@
 import os
 
+import psycopg
+from django import db
 from django.shortcuts import render
 
 from app.settings import MEDIA_ROOT, MEDIA_URL
+from database.db import connecttodb
 
 
 def print_trainers(request):
+    conn = connecttodb()
+    with conn.cursor() as cur:
+        cur.execute("SELECT * from website_clothes where type_of_clothes='trainers'")
+        id, type_of_clothes, size, price, name, image = cur.fetchone()
     trainers = []
-    for i in os.listdir(f"{MEDIA_ROOT}/trainers"):
-        trainers.append(f"{MEDIA_URL}/trainers/{i}")
+    trainers.append({"loc": MEDIA_URL + image, "price": price})
+    print(trainers)
+
+    trainers = []
     return render(request, "trainers.html", context={"trainers": trainers})
 
 
 def show_hoodies(request):
+    conn = connecttodb()
+    with conn.cursor() as cur:
+        cur.execute("SELECT * from website_clothes where type_of_clothes='hoodie'")
+        id, type_of_clothes, size, price, name, image = cur.fetchone()
     hoodies = []
-    for i in os.listdir(f"{MEDIA_ROOT}/hoodies"):
-        hoodies.append(f"{MEDIA_URL}hoodies/{i}")
+    hoodies.append({"loc": MEDIA_URL + image, "price": price})
+    print(hoodies)
     return render(request, "hoodies.html", context={"hoodies": hoodies})
