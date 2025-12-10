@@ -1,7 +1,4 @@
-import datetime
-
 from django.db import models
-from django.utils import timezone
 
 
 def clothes_upload_path(instance, filename):
@@ -17,6 +14,3 @@ class Clothes(models.Model):
         upload_to=clothes_upload_path,
         default="default.png",
     )
-
-    def __str__(self):
-        return self.name

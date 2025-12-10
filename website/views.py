@@ -6,8 +6,10 @@ from app.settings import MEDIA_ROOT, MEDIA_URL
 
 
 def print_trainers(request):
-
-    return render(request, "trainers.html", context={})
+    trainers = []
+    for i in os.listdir(f"{MEDIA_ROOT}/trainers"):
+        trainers.append(f"{MEDIA_URL}/trainers/{i}")
+    return render(request, "trainers.html", context={"trainers": trainers})
 
 
 def show_hoodies(request):
